@@ -83,7 +83,7 @@ jira_replica_count = 1
 # Supported versions by DCAPT: https://github.com/atlassian/dc-app-performance-toolkit#supported-versions
 #
 # Jira version
-jira_version_tag = "11.3.1"
+jira_version_tag = "10.3.15"
 # JSM version
 # jira_version_tag = "4.20.20"
 
