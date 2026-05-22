@@ -1,0 +1,26 @@
+---
+# LOCAL DRY-RUN CONFIG — merges on top of jira.yml via bzt.
+#
+# Intentional divergences from cloud (document all of them):
+#
+# 1. hostname/port/postfix: host.docker.internal:8080 (no path prefix)
+#    Cloud: ELB hostname on port 80 with /jira postfix
+#
+# 2. concurrency / duration / total_actions: reduced for 5-min local run
+#    Cloud: concurrency=200, test_duration=45m, total_actions=54500
+#
+# 3. Dataset: minimal (3 projects, ~200 issues created by jira_prepare_data.py)
+#    Cloud: Atlassian public APT snapshot (1M issues, 21K users) — seeded by install.sh
+#    IMPORTANT: Do not panic when numbers differ. Performance metrics are irrelevant locally.
+#
+# Everything else (load_executor, standalone_extension, SFJ percentages, prepare steps) IDENTICAL.
+settings:
+  env:
+    application_hostname: host.docker.internal
+    application_port: 8080
+    application_postfix:
+    concurrency: 2
+    test_duration: 5m
+    ramp-up: 10s
+    total_actions_per_hour: 545
+    allow_analytics: No
