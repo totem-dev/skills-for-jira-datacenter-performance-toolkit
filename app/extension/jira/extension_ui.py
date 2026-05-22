@@ -2,7 +2,6 @@ import pytest
 from selenium_ui.jira import sfj_modules
 
 
-from selenium_ui.jira_ui import test_0_selenium_a_login
 
 def test_1_selenium_edit_issue_with_skillset(jira_webdriver, jira_datasets, jira_screen_shots):
     sfj_modules.edit_issue_with_skillset(jira_webdriver, jira_datasets)
