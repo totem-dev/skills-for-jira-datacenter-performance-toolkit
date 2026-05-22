@@ -172,6 +172,28 @@ class SkillsForJiraBehavior(MyBaseTaskSet):
         assert 'mode' in content
 
     
+
+# APT 8.x adapter: called by locustfile.py at standalone_extension percentage.
+# 'locust' is the JiraBehavior task-set instance (has .client, .session_data_storage, etc.)
+def app_specific_action(locust):
+    """Randomly dispatches to one of the SFJ Locust actions on the current task set."""
+    import random
+    actions = [
+        lambda: locust.get('/plugins/servlet/skillsforjira/config', catch_response=True),
+        lambda: locust.get('/plugins/servlet/skillsforjira/team', catch_response=True),
+        lambda: locust.get('/rest/skillsforjira/1/user', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/user/updatedAfter?timestamp=1000000000', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/skilltree/global', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/expertise', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/queue', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/queue/validate', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/config/analytics', catch_response=True),
+        lambda: locust.get(f'/rest/skillsforjira/1/config/assignments', catch_response=True),
+    ]
+    with random.choice(actions)() as r:
+        if r.status_code == 401:
+            r.failure(f"SFJ action returned 401 - session lost")
+
 class SkillsForJiraUser(HttpUser):
     host = JIRA_SETTINGS.server_url
     tasks = [SkillsForJiraBehavior]
