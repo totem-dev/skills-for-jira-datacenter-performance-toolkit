@@ -1,0 +1,14 @@
+---
+# SCALE RUNS OVERRIDE (Runs 3, 4, 5) — merge on top of jira.yml via bzt.
+#
+# standalone_extension: 0 in jira.yml is correct for performance regression Runs 1 & 2.
+# For scale runs, pass this file as a second argument so app-specific actions are active:
+#
+#   docker run ... atlassian/dcapt jira.yml jira-scale.yml   (1-node scale, Run 3)
+#   docker run ... atlassian/dcapt jira.yml jira-scale.yml   (after jira_replica_count=2, Run 4)
+#   docker run ... atlassian/dcapt jira.yml jira-scale.yml   (after jira_replica_count=4, Run 5)
+#
+# APT guide: "standalone_extension set to non 0" for scale runs.
+settings:
+  env:
+    standalone_extension: 10
