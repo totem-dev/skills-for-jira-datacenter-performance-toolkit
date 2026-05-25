@@ -34,7 +34,7 @@ settings:
     view_kanban_board: 7
     view_backlog: 6
     browse_boards: 1
-    standalone_extension: 10
+    standalone_extension: 0
     
     sfj_get_analytics_config: 4
     sfj_get_assignments_config: 6
